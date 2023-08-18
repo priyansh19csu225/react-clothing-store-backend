@@ -6,11 +6,9 @@ const cartOperations = require("../db/services/cart_crud");
 
 const cartController = {
   async findCart(request, response) {
-    // const cart = request.params.userId;
     let tokenId = request.headers["authorization"];
     const id = returnToken(tokenId);
     const cart = id;
-    console.log(cart);
     try {
       const doc = await cartOperations.findCart(cart);
       if (doc) {
@@ -32,12 +30,11 @@ const cartController = {
     }
   },
   create(request, response) {
-    // response.send("U r on Create product Section");
     let tokenId = request.headers["authorization"];
     const id = returnToken(tokenId);
     let cartObject = {
       userId: id,
-      products: request.body,
+      products: request.body.products,
       
     };
     const promise = cartOperations.create(cartObject);
@@ -50,11 +47,10 @@ const cartController = {
       .catch((err) => {
         response
           .status(SERVER_ERROR)
-          .json({ message: messageBundle["cart.false"] });
+          .json({ message: messageBundle["cart.fail"] , error:err });
       });
   },
   deletefromcart(request, response) {
-    // response.send("U r on Create product Section");
     let tokenId = request.headers["authorization"];
     const id = returnToken(tokenId);
     let cartObject = {
@@ -76,10 +72,8 @@ const cartController = {
       });
   },
   cartdel(request, response) {
-    // response.send("U r on Create product Section");
     let tokenId = request.headers["authorization"];
     const id = returnToken(tokenId);
-    console.log(id);
     const promise = cartOperations.cartdel(id);
     promise
       .then(() => {

@@ -1,11 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const checkauth = require("../../utils/middlewares/auth1");
-// const { orders } = require("../../controllers/order");
 const { book , findOrder, cancelorder  } = require("../../controllers/order");
-const { DETAILS, HISTORY , BOOK , CANCEL } = require("../../utils/config").ROUTES.ORDER;
+const { DETAILS, BOOK , CANCEL } = require("../../utils/config").ROUTES.ORDER;
 router.post(BOOK, book);
-router.get(DETAILS,  checkauth ,findOrder);
-router.post(CANCEL , cancelorder);
-// router.get(DETAILS + "/:orderid", orders);
+router.get(DETAILS ,findOrder);
+router.get(CANCEL , cancelorder);
 module.exports = router;

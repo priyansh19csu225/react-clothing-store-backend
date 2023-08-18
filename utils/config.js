@@ -10,6 +10,7 @@ module.exports = {
     SUCCESS: 200,
     SERVER_ERROR: 500,
     FILE_NOT_FOUND: 404,
+    UNAUTHORISED: 401,
   },
   ROUTES: {
     ROOT: "/",
@@ -31,17 +32,13 @@ module.exports = {
     },
     ORDER: {
       DETAILS: "/order",
-      // HISTORY: "/history",
       BOOK: "/book",
       CANCEL: "/cancel"
     
     },
     CART: {
       CARTADD: "/addcart",
-      // CARTVIEW: "/cart/:userId",
       CARTVIEW: "/cart",
-      CARTDELETE: "/delcart",
-      CARTPRODUCTDELETE: "/delcartproduct"
     }
   },
 };

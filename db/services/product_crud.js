@@ -1,4 +1,3 @@
-const { deleteproduct } = require("../../controllers/product");
 const ProductModel = require("../models/product");
 module.exports = {
   create(productObject) {
@@ -6,7 +5,6 @@ module.exports = {
     return promise;
   },
   async find(title){
-    console.log(title);
     const doc = await ProductModel.findOne({ "title" : { 
       "$regex": "^" + title + "\\b", "$options": "i"
   } });
@@ -18,7 +16,6 @@ module.exports = {
     }
   },
   async findByid(id){
-    // console.log(title);
     const doc = await ProductModel.findOne({ "_id" : id });
     if(doc) {
       return doc;

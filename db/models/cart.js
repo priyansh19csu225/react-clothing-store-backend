@@ -6,8 +6,8 @@ const cartSchema = new Schema(
     userId: { type: SchemaTypes.ObjectId , ref: SCHEMAS.USERS ,required: true },
     products: [
       {
-        productId: {
-          type: SchemaTypes.Number,
+        _id: {
+          type: SchemaTypes.ObjectId,
         },
         quantity: {
           type: SchemaTypes.Number,

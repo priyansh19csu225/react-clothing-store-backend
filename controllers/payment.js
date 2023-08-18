@@ -15,7 +15,6 @@ const payment = (request, response) => {
   },(stripeErr , stripeRes) => {
     if(stripeErr){
       response.status(SERVER_ERROR).json({ message: messageBundle["ErrorMessageDefault"] , error : stripeErr });
-      console.log(stripeErr);
     }
     else{
       response.status(SUCCESS).json({ message: messageBundle["payment.success"] , payment : stripeRes });

@@ -19,7 +19,6 @@ module.exports = {
     const doc = await UserModel.findOne({ emailid: email });
     if (doc) {
       if (encryption.compareHash(doc.password, password)) {
-        console.log(doc._id.toString());
         return doc;
       } else {
         return null;

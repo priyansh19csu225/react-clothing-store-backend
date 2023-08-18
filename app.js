@@ -11,10 +11,9 @@ const { ROOT } = require("./utils/config").ROUTES;
 app.use(cors());
 app.use(ROOT, require("./api/routes/user"));
 app.use(ROOT, require("./api/routes/product"));
-app.use(ROOT, require("./api/routes/payment"));
-// app.use(require("./utils/middlewares/auth"));
-app.use(ROOT, require("./api/routes/order"));
 app.use(ROOT, require("./api/routes/cart"));
+app.use(ROOT, require("./api/routes/payment"));
+app.use(ROOT, require("./api/routes/order"));
 app.use(require("./utils/middlewares/404"));
 
 const server = app.listen(process.env.PORT || 1234, (err) => {

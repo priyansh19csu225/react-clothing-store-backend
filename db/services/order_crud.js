@@ -6,9 +6,7 @@ module.exports = {
     return promise;
   },
   async findOrder(userid){
-    console.log(userid);
-    // const doc = await OrderModel.findOne({ userId : userid});
-    const doc = await OrderModel.find({userId : userid})
+    const doc = await OrderModel.find({userId : userid}).sort({ createdAt: -1 })
     if(doc) {
       return doc;
     }
@@ -16,11 +14,8 @@ module.exports = {
       return null;
     }
   },
-  async cancelorder(orderObject){
-    // console.log(userid);
-    // const doc = await OrderModel.findOne({ userId : userid});
-    console.log(orderObject);
-    const doc = await OrderModel.updateOne({$and: [{'userId': orderObject.userid}, {'amount': orderObject.amount}]},{ $set: { "status" : "Cancelled" } });
+  async cancelorder(orderId){
+    const doc = await OrderModel.updateOne({ _id : orderId },{ $set: { "status" : "Cancelled" } });
     if(doc) {
       return doc;
     }

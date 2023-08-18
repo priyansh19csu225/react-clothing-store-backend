@@ -22,7 +22,7 @@ const orderSchema = new Schema(
       }
     ],
     amount: { type: SchemaTypes.Number, required: true },
-    address: { type: SchemaTypes.Object, required: true },
+    address: { type: SchemaTypes.Object, required: false },
     status: { type: SchemaTypes.String, default: "pending" },
   },
   { timestamps: true }

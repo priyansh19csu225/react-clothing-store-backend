@@ -5,12 +5,8 @@ const { returnEmail } = require("../utils/token");
 const userOperations = require("../db/services/user_crud");
 const jwt = require("../utils/token");
 const userController = {
-  show(request, response) {
-    response.send("U r on Show Section");
-  },
   async login(request, response) {
     const user = request.body;
-    console.log(user);
     try {
       const doc = await userOperations.login(user);
       if (doc) {
@@ -32,7 +28,6 @@ const userController = {
         .status(SERVER_ERROR)
         .json({ message: messageBundle["login.invaliduser"] });
     }
-    // response.send("U r on Login Section " + JSON.stringify(json));
   },
   async changepass(request, response) {
     let tokenId = request.headers["authorization"];
@@ -67,7 +62,6 @@ const userController = {
     }
   },
   register(request, response) {
-    // response.send("U r on Register Section");
     let userObject = {
       emailid: request.body.email,
       password: request.body.pwd,

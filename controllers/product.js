@@ -96,7 +96,6 @@ const productController = {
     }
   },
   create(request, response) {
-    // response.send("U r on Create product Section");
     let productObject = {
       title: request.body.title,
       desc: request.body.desc,

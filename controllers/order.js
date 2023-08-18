@@ -3,15 +3,12 @@ const { SUCCESS, SERVER_ERROR, NOT_FOUND } =
 const messageBundle = require("../locales/en");
 const { returnToken } = require("../utils/token");
 const { findCart , cartdel} = require("../db/services/cart_crud");
-// const { cartdel } = require("../controllers/cart");
 const orderOperations = require("../db/services/order_crud");
 const orderController = {
   async findOrder(request, response) {
-    // const order = request.params.userId;
     let tokenId = request.headers["authorization"];
     const id = returnToken(tokenId);
     const order = id;
-    console.log(order);
     try {
       const doc = await orderOperations.findOrder(order);
       if (doc) {
@@ -26,7 +23,6 @@ const orderController = {
           .status(NOT_FOUND)
           .json({ message: messageBundle["findOrder.fail"] });
       }
-      console.log("JSON is ", json);
     } catch (err) {
       response
         .status(SERVER_ERROR)
@@ -34,10 +30,15 @@ const orderController = {
     }
   },
   async book(request, response) {
-    // response.send("U r on Create product Section");
     let tokenId = request.headers["authorization"];
     const id = returnToken(tokenId);
     const doc = await findCart(id);
+    if(!doc){
+     response
+    .status(SERVER_ERROR)
+    .json({ message: messageBundle["book.false"] });
+    return;}
+      
     let amt = 0 ;
     for(let i=0 ; i< doc.products.length; i++){
       amt += doc.products[i].price * doc.products[i].quantity;
@@ -46,10 +47,8 @@ const orderController = {
       userId: id,
       products: doc.products,
       amount: amt,
-      address: request.body.address,
       status: "success"
     };
-    // console.log(orderObject);
     const promise = orderOperations.book(orderObject);
   
     promise
@@ -64,19 +63,11 @@ const orderController = {
           .status(SERVER_ERROR)
           .json({ message: messageBundle["book.false"] });
       });
-      // cartdel();
       
   },
   async cancelorder(request, response) {
-    // response.send("U r on Create product Section");
-    let tokenId = request.headers["authorization"];
-    const id = returnToken(tokenId);
-    let orderObject = {
-      userid: id,
-      amount: request.body.amount,
-    };
-    // console.log(orderObject);
-    const promise = orderOperations.cancelorder(orderObject);
+    const orderId = request.query.orderid;
+    const promise = orderOperations.cancelorder(orderId);
   
     promise
       .then((doc) => {
@@ -89,7 +80,6 @@ const orderController = {
           .status(SERVER_ERROR)
           .json({ message: messageBundle["cancelorder.false"] });
       });
-      // cartdel();
       
   },
 };
